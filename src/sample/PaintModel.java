@@ -9,6 +9,11 @@ import javafx.collections.ObservableList;
 
 public class PaintModel {
 
+
+
+
+
+
     private StringProperty  textShowChatWindow = new SimpleStringProperty();
     public String getTextShowChatWindow() {
         return textShowChatWindow.get();
