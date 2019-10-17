@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="410.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.PaintController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="410.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainMap.PaintController">
 
    <children>
        <Button    fx:id="undoButton"      layoutX="210.0" layoutY="96.0" mnemonicParsing="false" onAction="#undo" text="Undo" />
@@ -24,28 +24,28 @@
        <TextField fx:id="textFieldSlider" layoutX="342.0" layoutY="56.0" prefHeight="25.0" prefWidth="52.0" promptText="gegege" />
 
        <Label       text="Color:"         layoutX="274.0" layoutY="96.0"  />
-       <ColorPicker fx:id="colorPicker"   layoutX="322.0" layoutY="96.0" onAction="#changeColor" prefHeight="21.0" prefWidth="72.0" />
+       <ColorPicker fx:id="colorPicker"   layoutX="322.0" layoutY="96.0" onAction="#changeColorWithColorpicker" prefHeight="21.0" prefWidth="72.0" />
 
-       <MenuButton layoutX="24.0" layoutY="96.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="170.0" text="Shapes">
+       <MenuButton text="Shapes"          layoutX="24.0"  layoutY="96.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="170.0" >
            <items>
-               <MenuItem fx:id="rectangle" mnemonicParsing="false" onAction="#mRectangleButton" text="Rectangle" />
-               <MenuItem fx:id="circle" onAction="#mCircleButton" text="Circle" />
+              <MenuItem fx:id="rectangle" onAction="#mRectangleButton" text="Rectangle" mnemonicParsing="false"   />
+              <MenuItem fx:id="circle"    onAction="#mCircleButton"    text="Circle"   />
            </items>
        </MenuButton>
 
-      <Pane layoutX="24.0"      layoutY="141.0" prefHeight="464.0" prefWidth="370.0" style="-fx-background-color: black;">
+      <Pane                               layoutX="24.0"   layoutY="141.0" prefHeight="464.0" prefWidth="370.0" style="-fx-background-color: black;">
          <children>
-            <Pane layoutX="5.0" layoutY="5.0" prefHeight="454.0" prefWidth="360.0" style="-fx-background-color: white">
+            <Pane                         layoutX="5.0"    layoutY="5.0" prefHeight="454.0" prefWidth="360.0" style="-fx-background-color: white">
                <children>
-                  <Canvas fx:id="canvas" onMouseClicked="#mouseClickInCanvas"  layoutX="4.0" layoutY="5.0" height="440.0"  width="350.0" /></children></Pane>
+                  <Canvas fx:id="canvas"  onMouseClicked="#mouseClickInCanvas"  layoutX="4.0" layoutY="5.0" height="440.0"  width="350.0" /></children></Pane>
          </children></Pane>
 
       <MenuBar layoutY="-4.0" prefHeight="31.0" prefWidth="410.0">
         <menus>
-          <Menu mnemonicParsing="false" text="File">
+          <Menu mnemonicParsing="false"   text="Save and Exit">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#EXIT" text="Close" />
-              <MenuItem mnemonicParsing="false" onAction="#saveSVG" text="Save" />
+              <MenuItem  onAction="#saveSVG" text="Save" mnemonicParsing="false"  />
+              <MenuItem  onAction="#EXIT"    text="Exit" mnemonicParsing="false"  />
             </items>
           </Menu>
         </menus>

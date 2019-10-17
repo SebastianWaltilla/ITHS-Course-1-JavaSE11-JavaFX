@@ -7,9 +7,13 @@ import javafx.scene.paint.Paint;
 
 public interface DrawableInterface {
 
+
+
+
+
     void setSize(double x);
 
-    String printToSVGFromString();
+    String stringSVGFormat();
 
     void setXpos(double xpos);
 

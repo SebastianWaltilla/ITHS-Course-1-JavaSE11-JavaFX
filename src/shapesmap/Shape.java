@@ -1,9 +1,6 @@
 package shapesmap;
 
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.*;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
 public class Shape implements DrawableInterface {
@@ -13,13 +10,17 @@ public class Shape implements DrawableInterface {
     private ObjectProperty<Paint> paint = new SimpleObjectProperty<>();
 
 
+
+    private IntegerProperty hej;
+
+
     @Override
     public void setSize(double x) {
 
     }
 
     @Override
-    public String printToSVGFromString() {
+    public String stringSVGFormat() {
         return null;
     }
 
