@@ -1,12 +1,10 @@
 package mainMap;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import shapesmap.DrawableInterface;
-import shapesmap.Shape;
 
 public class PaintModel {
 
-    ObservableList<DrawableInterface> shapes;
+        ObservableList<DrawableInterface> shapes;
 
     public PaintModel() {
         this.shapes = FXCollections.observableArrayList();

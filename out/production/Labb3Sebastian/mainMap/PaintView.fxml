@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="410.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainMap.PaintController">
+
+   <children>
+       <Button fx:id="undoButton" layoutX="24.0" layoutY="94.0" mnemonicParsing="false" onAction="#undo" prefHeight="25.0" prefWidth="92.0" text="UndoChange" />
+
+       <Text layoutX="263.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Chosen Size = " />
+       <Slider fx:id="slider" layoutX="63.0" layoutY="61.0" prefHeight="14.0" prefWidth="191.0" />
+       <Text layoutX="24.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Size" wrappingWidth="45.1328125" />
+       <TextField fx:id="textFieldSlider" layoutX="342.0" layoutY="56.0" prefHeight="25.0" prefWidth="52.0" promptText="gegege" />
+
+       <Label layoutX="286.0" layoutY="96.0" text="Color:" />
+       <ColorPicker fx:id="colorPicker" layoutX="322.0" layoutY="96.0" onAction="#setColorWithColorpicker" prefHeight="21.0" prefWidth="72.0" />
+
+       <MenuButton layoutX="200.0" layoutY="94.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="78.0" text="Shapes">
+           <items>
+              <MenuItem fx:id="rectangle" mnemonicParsing="false" onAction="#mRectangleButton" text="Rectangle" />
+              <MenuItem fx:id="circle" onAction="#mCircleButton" text="Circle" />
+           </items>
+       </MenuButton>
+
+      <Pane layoutX="24.0" layoutY="141.0" prefHeight="464.0" prefWidth="370.0" style="-fx-background-color: black;">
+         <children>
+            <Pane layoutX="5.0" layoutY="5.0" prefHeight="454.0" prefWidth="360.0" style="-fx-background-color: white">
+               <children>
+                  <Canvas fx:id="canvas" height="440.0" layoutX="4.0" layoutY="5.0" onMouseClicked="#mouseClickInCanvas" width="350.0" /></children></Pane>
+         </children></Pane>
+
+      <MenuBar layoutY="-4.0" prefHeight="31.0" prefWidth="410.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="Save and Exit">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#saveSVG" text="Save" />
+              <MenuItem mnemonicParsing="false" onAction="#EXIT" text="Exit" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <Button fx:id="undoShapeButton" onAction="#undoLastShape" layoutX="120.0" layoutY="94.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="78.0" text="UndoShape" />
+
+
+   </children>
+</Pane>

@@ -7,9 +7,6 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import shapesmap.CircleClass;
-import shapesmap.DrawableInterface;
-import shapesmap.RectangleClass;
 import static javafx.scene.paint.Color.BLACK;
 
 public class PaintController {
@@ -28,18 +25,15 @@ public class PaintController {
     MenuItem rectangle;
     @FXML
     TextField textFieldSlider;
+    @FXML
+    Button undoShapeButton;
 
+    Shape copyShape;
+    Shape undoShape;
     GraphicsContext gc;
     PaintModel paintmodel;
-    public inputFromButtons userChoice = inputFromButtons.DEFAULT;
+    public inputFromButtons userChoice = inputFromButtons.CIRCLE;
     PaintSaveFile save;
-
-
-    public PaintController(PaintModel paintmodel, PaintSaveFile save){
-        this.paintmodel = paintmodel;
-        this.save = save;
-
-    }
 
     public void initialize() {
         gc = canvas.getGraphicsContext2D();
@@ -50,11 +44,17 @@ public class PaintController {
         textFieldSlider.textProperty().bind(slider.valueProperty().asString());
     }
 
+    public PaintController(PaintModel paintmodel, PaintSaveFile save){
+        this.paintmodel = paintmodel;
+        this.save = save;
+    }
+
     public void mouseClickInCanvas(MouseEvent event){
        double x = event.getX();
        double y = event.getY();
 
        if (event.getButton() == MouseButton.SECONDARY) {
+           undoSaveObject(x,y);
            changeColorWithColorPicker(x, y);
            changeSizeWithSlider(x, y);
        } else {
@@ -70,6 +70,28 @@ public class PaintController {
        drawShapesOnCanvas();
     }
 
+    public void saveSVG(ActionEvent actionEvent) {
+        save.saveSVGMethod(paintmodel);
+    }
+
+    public void undoLastShape(){
+        if (paintmodel.getShapes().size() != 0) {
+            paintmodel.getShapes().remove(paintmodel.shapes.size() -1);
+            drawShapesOnCanvas();
+        }
+    }
+
+    public void firstTobeCopy(Shape firstTobeCopy) {
+        this.copyShape = firstTobeCopy;
+        this.undoShape = firstTobeCopy.deepCopy();
+    }
+
+    private void undoSaveObject(double x, double y){
+        paintmodel.getShapes().stream()
+                .filter(s -> s.intersects(x, y)).map(drawableInterface -> (Shape) drawableInterface)
+                .findFirst().ifPresent(s -> firstTobeCopy(s));
+    }
+
     private void changeSizeWithSlider(double x, double y) {
         paintmodel.getShapes().stream()
                 .filter(s -> s.intersects(x, y))
@@ -82,11 +104,17 @@ public class PaintController {
                 .findFirst().ifPresent( s -> s.setPaint(colorPicker.getValue()));
     }
 
+    public void mCircleButton(){
+        userChoice = userChoice.CIRCLE;
+    }
     private void createCircle(double x, double y) {
         CircleClass circle = new CircleClass(x, y, slider.getValue(), colorPicker.getValue());
         paintmodel.saveShapeToObserveList(circle);
     }
 
+    public void mRectangleButton(){
+        userChoice = userChoice.RECTANGLE;
+    }
     private void createRectangle(double x, double y) {
         RectangleClass rectangle = new RectangleClass(x, y, slider.getValue(), slider.getValue(), colorPicker.getValue());
         paintmodel.saveShapeToObserveList(rectangle);
@@ -106,19 +134,17 @@ public class PaintController {
         gc.setFill(Color.DARKBLUE);
     }
 
-    public void changeColorWithColorpicker(ActionEvent actionEvent) {
+    public void setColorWithColorpicker(ActionEvent actionEvent) {
         Color c = colorPicker.getValue();
         gc.setStroke(c);
         gc.setFill(c);
     }
 
-    public void saveSVG(ActionEvent actionEvent) {
-    save.saveSVGMethod(paintmodel);
-    }
-
     public void undo(){
-        if (paintmodel.getShapes().size() != 0) {
-            paintmodel.getShapes().remove(paintmodel.shapes.size() -1);
+        int index = paintmodel.getShapes().indexOf(copyShape);
+        if (index >= 0) {
+            paintmodel.shapes.remove(index);
+            paintmodel.shapes.add(index, undoShape);
             drawShapesOnCanvas();
         }
     }
@@ -127,13 +153,6 @@ public class PaintController {
         CIRCLE,
         RECTANGLE,
         DEFAULT
-    }
-
-    public void mCircleButton(){
-        userChoice = userChoice.CIRCLE;
-    }
-    public void mRectangleButton(){
-        userChoice = userChoice.RECTANGLE;
     }
 
     public void EXIT() {
